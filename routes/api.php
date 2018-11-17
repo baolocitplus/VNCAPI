@@ -18,6 +18,13 @@ $api->version('v1', function (Router $api) {
         $api->get('me', 'App\\Api\\V1\\Controllers\\UserController@me');
     });
 
+    $api->group(['prefix' => 'addIP'], function(Router $api) {
+        $api->post('', 'App\\Api\\V1\\Controllers\\addIpController@addIP');
+
+    });
+
+
+
     $api->group(['middleware' => 'jwt.auth'], function(Router $api) {
         $api->get('protected', function() {
             return response()->json([

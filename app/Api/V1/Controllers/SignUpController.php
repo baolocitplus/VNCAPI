@@ -7,6 +7,7 @@ use App\User;
 use Tymon\JWTAuth\JWTAuth;
 use App\Http\Controllers\Controller;
 use App\Api\V1\Requests\SignUpRequest;
+
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SignUpController extends Controller
