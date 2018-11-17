@@ -18,6 +18,7 @@ class CreateAddressIPTable extends Migration
             $table->string('name')->nullable();
             $table->string('ip')->nullable();
             $table->string('port')->nullable();
+            $table->string('protocol')->default('http');
             $table->timestamps();
         });
     }

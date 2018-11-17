@@ -22,6 +22,7 @@ class addIpController extends Controller
                 $insert->name = $req["name"];
                 $insert->ip = $req["ip"];
                 $insert->port = $req["port"];
+                $insert->protocol = $req["protocol"];
                 $insert->save();
                 DB::commit();
                 return response()->json([
