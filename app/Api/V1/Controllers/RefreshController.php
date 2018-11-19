@@ -10,25 +10,21 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Auth;
 
-class UserController extends Controller
+class RefreshController extends Controller
 {
     /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('jwt.auth', []);
-    }
-
-    /**
-     * Get the authenticated User
+     * Refresh a token.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
+    public function refresh()
     {
-        return response()->json(Auth::guard()->user());
+        $token = Auth::guard()->refresh();
+
+        return response()->json([
+            'status' => 'ok',
+            'token' => $token,
+            'expires_in' => Auth::guard()->factory()->getTTL() * 60
+        ]);
     }
 }

@@ -18,7 +18,7 @@ class addIpController extends Controller
 
             DB::beginTransaction();
             try {
-                $insert = new address_ip;
+                $insert = new address_Ip();
                 $insert->name = $req["name"];
                 $insert->ip = $req["ip"];
                 $insert->port = $req["port"];
