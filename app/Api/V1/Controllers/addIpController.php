@@ -2,7 +2,7 @@
 
 namespace App\Api\V1\Controllers;
 
-use App\address_ip;
+use App\address_Ip;
 use Config;
 use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\Controller;
