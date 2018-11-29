@@ -105,4 +105,8 @@ class UserController extends Controller
             ->json(['message' => 'Successfully logged out']);
     }
 
+    public function me()
+    {
+        return response()->json(Auth::guard()->user());
+    }
 }

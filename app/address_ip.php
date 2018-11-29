@@ -13,7 +13,8 @@ class address_Ip extends Model
       'name',
       'ip',
       'port',
-      'protocol'
+      'protocol',
+        'user_id'
     ];
 
 }

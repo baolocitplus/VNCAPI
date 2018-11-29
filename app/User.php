@@ -59,4 +59,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+
+    public function ip()
+    {
+        return $this->hasMany(address_Ip::class, 'user_id');
+    }
 }

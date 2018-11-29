@@ -2,6 +2,7 @@
     Require all granted
 </Limit>
 <IfModule mod_rewrite.c>
+    Header set Access-Control-Allow-Origin "*"
     RewriteEngine On
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
