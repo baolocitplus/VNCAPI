@@ -21,11 +21,19 @@ $api->version('v1', function (Router $api) {
     $api->group(['prefix' => 'addIP'], function(Router $api) {
         $api->post('', 'App\\Api\\V1\\Controllers\\addIpController@addIP');
 
+
     });
 
     $api->group(['prefix' => 'getip'], function(Router $api) {
-        $api->get('all', 'App\\Api\\V1\\Controllers\\addIpController@getAllIp');
-        $api->get('user/{id}', 'App\\Api\\V1\\Controllers\\addIpController@getUser');
+//        $api->get('all', 'App\\Api\\V1\\Controllers\\addIpController@getAllIp');
+//        $api->get('user/{id}', 'App\\Api\\V1\\Controllers\\addIpController@getUser');
+        $api->delete('delete/{id}','App\\Api\\V1\\Controllers\\addIpController@deleteIp');
+
+    });
+
+    $api->group(['prefix' => 'script'], function(Router $api) {
+        $api->get('all', 'App\\Api\\V1\\Controllers\\ScriptController@getScrip');
+        $api->post('create', 'App\\Api\\V1\\Controllers\\ScriptController@createScript');
 
     });
 

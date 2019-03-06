@@ -11,10 +11,11 @@ use DB;
 
 class addIpController extends Controller
 {
+
     public function addIp()
     {
         $req = Input::all();
-
+        $user_id = auth()->user();
         if(isset($req)){
 
             DB::beginTransaction();
@@ -23,8 +24,8 @@ class addIpController extends Controller
                 $insert->name = $req["name"];
                 $insert->ip = $req["ip"];
                 $insert->port = $req["port"];
-                $insert->user_id = $req["user_id"];
                 $insert->protocol = $req["protocol"];
+                $insert->script_id = $req["script_id"];
                 $insert->save();
                 DB::commit();
                 return response()->json([
@@ -57,22 +58,41 @@ class addIpController extends Controller
         }
     }
 
-    public function getUser($id){
+//    public function getUser(){
+//
+//        DB::beginTransaction();
+//        try{
+//
+//
+//            $data = address_Ip::where('user_id', $id)->get();
+//
+//            DB::commit();
+//            return response()->json([
+//                'status' => 'success',
+//                'data' => $data
+//            ]);
+//        } catch (\Exception $e){
+//            DB::rollback();
+//            throw $e;
+//        }
+//
+//    }
 
+    public function deleteIp($id){
         DB::beginTransaction();
         try{
 
-            $data = address_Ip::where('user_id', $id)->get();
-
+            $data = address_Ip::find($id);
+            $data->delete();
             DB::commit();
             return response()->json([
                 'status' => 'success',
-                'data' => $data
+                'data' => $data->id
             ]);
         } catch (\Exception $e){
             DB::rollback();
             throw $e;
         }
-
     }
+
 }

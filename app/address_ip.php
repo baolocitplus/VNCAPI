@@ -9,12 +9,11 @@ class address_Ip extends Model
     //
     protected $table = 'address_ip';
     protected $fillable = [
-      'id',
-      'name',
-      'ip',
-      'port',
-      'protocol',
-        'user_id'
+        'id',
+        'name',
+        'port',
+        'protocol',
+        'script_id'
     ];
 
 }
