@@ -50,11 +50,29 @@ class ScriptController extends Controller
             $script = new  Script;
             $script->name = $request->name;
             $script->description = $request->description;
+            $script->attack = $request->attack;
             $script->user_id = $user_id->id;
             $script->save();
 
             return response()->json([
                 'error_code' => 0,
+                'error_message' => 'success',
+                'data' => $script
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new HttpException(403);
+        }
+    }
+    public function deleteScript($id){
+        DB::beginTransaction();
+        try{
+            $script = Script::find($id);
+            $script->delete();
+            $ip = address_Ip::where('script_id', $id)->delete();
+            DB::commit();
+            return response()->json([
+                'status' => true,
                 'error_message' => 'success',
                 'data' => $script
             ]);
