@@ -37,6 +37,11 @@ $api->version('v1', function (Router $api) {
         $api->delete('{id}', 'App\\Api\\V1\\Controllers\\ScriptController@deleteScript');
     });
 
+    $api->group(['prefix' => 'diagram'], function(Router $api) {
+        $api->get('', 'App\\Api\\V1\\Controllers\\ScriptController@getComputer');
+        $api->post('', 'App\\Api\\V1\\Controllers\\ScriptController@addNameComputer');
+        $api->delete('{id}', 'App\\Api\\V1\\Controllers\\ScriptController@deleteComputer');
+    });
 
     $api->group(['middleware' => 'jwt.auth'], function(Router $api) {
         $api->get('protected', function() {

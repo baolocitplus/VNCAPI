@@ -3,6 +3,7 @@
 namespace App\Api\V1\Controllers;
 
 use App\address_Ip;
+use App\Computer;
 use App\Script;
 use App\User;
 use Config;
@@ -49,7 +50,7 @@ class ScriptController extends Controller
 
             $script = new  Script;
             $script->name = $request->name;
-            $script->description = $request->description;
+            $script->security = $request->security;
             $script->attack = $request->attack;
             $script->user_id = $user_id->id;
             $script->save();
@@ -61,7 +62,7 @@ class ScriptController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollback();
-            throw new HttpException(403);
+            throw $e;
         }
     }
     public function deleteScript($id){
@@ -78,9 +79,66 @@ class ScriptController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollback();
-            throw new HttpException(403);
+            throw $e;
         }
     }
 
+
+    public function addNameComputer(){
+        DB::beginTransaction();
+        try{
+            $req = Input::all();
+            $insert = new Computer;
+            $insert->name = $req["name"];
+            $insert->ip = $req["ip"];
+            $insert->description = $req["description"];
+            $insert->system = $req["system"];
+            $insert->memory = $req["memory"];
+            $insert->cpu = $req["cpu"];
+            $insert->save();
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'error_message' => 'success',
+                'data' => $insert
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    public function getComputer(){
+        DB::beginTransaction();
+        try{
+            $data = Computer::all();
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'error_message' => 'success',
+                'data' => $data
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    public function deleteComputer($id){
+        DB::beginTransaction();
+        try{
+            $data = Computer::find($id);
+            $data->delete();
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'error_message' => 'success',
+                'data' => $data
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
 
 }
