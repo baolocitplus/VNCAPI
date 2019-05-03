@@ -18,4 +18,7 @@ class Script extends Model
     public function IpAddress(){
         return $this->hasMany(address_Ip::class, 'script_id', 'id');
     }
+    public function contents(){
+        return $this->hasMany(Content::class, 'script_id', 'id');
+    }
 }

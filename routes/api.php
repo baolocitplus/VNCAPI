@@ -35,6 +35,8 @@ $api->version('v1', function (Router $api) {
         $api->get('all', 'App\\Api\\V1\\Controllers\\ScriptController@getScrip');
         $api->post('create', 'App\\Api\\V1\\Controllers\\ScriptController@createScript');
         $api->delete('{id}', 'App\\Api\\V1\\Controllers\\ScriptController@deleteScript');
+        $api->post('content/{id}', 'App\\Api\\V1\\Controllers\\ScriptController@postConttent');
+        $api->delete('content/{id}', 'App\\Api\\V1\\Controllers\\ScriptController@deleteConttent');
     });
 
     $api->group(['prefix' => 'diagram'], function(Router $api) {

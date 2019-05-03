@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use App\address_Ip;
 use App\Computer;
+use App\Content;
 use App\Script;
 use App\User;
 use Config;
@@ -17,7 +18,7 @@ class ScriptController extends Controller
 
     public function __construct()
     {
-        $this->middleware('jwt.auth', []);
+        $this->middleware('jwt.auth', [])->except('postConttent','deleteConttent', 'deleteScript', 'getComputer');
     }
 
     public function getScrip()
@@ -28,6 +29,7 @@ class ScriptController extends Controller
             $data = Script::where('user_id', $user_id->id)->get();
             foreach ($data as $item) {
                 $item->IpAddress;
+                $item->contents;
                 $script = $data;
             }
 
@@ -54,7 +56,6 @@ class ScriptController extends Controller
             $script->attack = $request->attack;
             $script->user_id = $user_id->id;
             $script->save();
-
             return response()->json([
                 'error_code' => 0,
                 'error_message' => 'success',
@@ -141,4 +142,43 @@ class ScriptController extends Controller
         }
     }
 
+    // content
+    public function postConttent($id){
+        DB::beginTransaction();
+        try{
+            $req = Input::all();
+            $insert = new Content();
+            $insert->name = $req['name'];
+            $insert->content = $req['content'];
+            $insert->script_id = $id;
+            $insert->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'error_message' => 'success',
+                'data' => $insert
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    public function deleteConttent($id){
+        DB::beginTransaction();
+        try{
+            $content = Content::find($id);
+            $content->delete();
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'error_message' => 'success',
+                'data' => $content
+            ]);
+        }catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
 }
